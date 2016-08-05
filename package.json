@@ -1,0 +1,14 @@
+{
+  "name": "dailydnb",
+  "version": "0.0.1",
+  "description": "Daily dnb artist and track generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "R Hill",
+  "license": "BSD",
+  "dependencies": {
+    "lodash": "~4.14.1"
+  }
+}
