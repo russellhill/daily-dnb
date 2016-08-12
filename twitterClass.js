@@ -14,7 +14,6 @@ TwitterClass.prototype.sendTweet = function (message, callback) {
     });
 
     twitter.post('statuses/update', { status: message }, function(err, data, response) {
-        console.log(data);
         callback(err, data);
     });
 };

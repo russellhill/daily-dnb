@@ -2,6 +2,7 @@
 
 var fs = require('fs');
 var readline = require('readline');
+var RandomUtils = require('./randomUtils').RandomUtils;
 
 var what = [
         'track',
@@ -9,6 +10,17 @@ var what = [
         'sound',
         'tune'
 ];
+
+var start = [
+        'Why not',
+        'Go and',
+        'Time to',
+        'Tune in and',
+        'BOOM -',
+        'WOW -'
+];
+
+var randomUtils = new RandomUtils();
 
 var readWordFile = function(fileName, callback) {
     var names = [];
@@ -22,50 +34,25 @@ var readWordFile = function(fileName, callback) {
     });
 };
 
-var randomInt = function(low, high) {
-    return Math.floor(Math.random() * (high - low) + low);
-};
-
-var getRandomWord = function(wordsArray) {
-    var rand = randomInt(0, wordsArray.length);
-    return wordsArray[rand];
-};
-
-var getRandomWords = function(wordsArray, numberOfWords) {
-    var intArray = [];
-
-    for(var count = 0; count < numberOfWords; count++) {
-        var found = 0;
-        while (found > -1) {
-            var rand = randomInt(0, wordsArray.length);
-            found = intArray.indexOf(rand);
-            if (found === -1) {
-                intArray.push(rand);
-            }
-        }
-    }
-
-    var randomWords = [];
-
-    intArray.map(function (value) {
-        randomWords.push(wordsArray[value]);
-    });
-
-    return randomWords;
-};
-
 var RandomWords = function () {};
+
+RandomWords.prototype.generateLeadUp = function (callback) {
+    readWordFile('description.txt', function(wordsArray) {
+        var words = randomUtils.getRandomWords(wordsArray, randomUtils.randomInt(1, 4));
+
+        var text = randomUtils.getRandomWord(start);
+        text += ' check out this ';
+        text += words.join(', ');
+        text += ' ' + randomUtils.getRandomWord(what);
+
+        callback(null, text);
+    });
+};
 
 RandomWords.prototype.generateSentence = function (callback) {
     readWordFile('names.txt', function(namesArray) {
-        var names = getRandomWords(namesArray, randomInt(1, 3));
-        readWordFile('description.txt', function(wordsArray) {
-            var words = getRandomWords(wordsArray, randomInt(1, 4));
-
-            var text = 'BOOM! Check out this ';
-            text += words.join(', ');
-            text += ' new ';
-            text += getRandomWord(what);
+        var names = randomUtils.getRandomWords(namesArray, randomUtils.randomInt(1, 3));
+        RandomWords.prototype.generateLeadUp(function (err, text) {
             text += ' from ';
             text += names.join(' and ');
 
