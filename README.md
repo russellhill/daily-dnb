@@ -1,5 +1,5 @@
 # daily-dnb
-Daily D&amp;B
+## Daily Dose of D&amp;B
 
 Generates a random description for a track and chooses a random track from a
 Soundcloud account, then constructs these into a tweet and sends it from the
