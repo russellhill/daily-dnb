@@ -1,8 +1,8 @@
 'use strict';
 
-var RandomWords = require('./randomWords').RandomWords;
-var TwitterClass = require('./twitterClass').TwitterClass;
-var SoundcloudClass = require('./soundcloudClass').SoundcloudClass;
+var RandomWords = require('./classes/randomWords').RandomWords;
+var TwitterClass = require('./classes/twitterClass').TwitterClass;
+var SoundcloudClass = require('./classes/soundcloudClass').SoundcloudClass;
 
 var randomWords = new RandomWords();
 var soundcloudClass = new SoundcloudClass();

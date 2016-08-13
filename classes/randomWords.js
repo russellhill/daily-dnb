@@ -37,7 +37,7 @@ var readWordFile = function(fileName, callback) {
 var RandomWords = function () {};
 
 RandomWords.prototype.generateLeadUp = function (callback) {
-    readWordFile('description.txt', function(wordsArray) {
+    readWordFile('./data/description.txt', function(wordsArray) {
         var words = randomUtils.getRandomWords(wordsArray, randomUtils.randomInt(1, 4));
 
         var text = randomUtils.getRandomWord(start);
@@ -50,7 +50,7 @@ RandomWords.prototype.generateLeadUp = function (callback) {
 };
 
 RandomWords.prototype.generateSentence = function (callback) {
-    readWordFile('names.txt', function(namesArray) {
+    readWordFile('./data/names.txt', function(namesArray) {
         var names = randomUtils.getRandomWords(namesArray, randomUtils.randomInt(1, 3));
         RandomWords.prototype.generateLeadUp(function (err, text) {
             text += ' from ';
