@@ -1,5 +1,7 @@
 'use strict';
 
+var fs = require('fs');
+var util = require('util');
 var SoundCloud = require('soundcloud-nodejs-api-wrapper');
 var request = require('request');
 var RandomUtils = require('./randomUtils').RandomUtils;
@@ -68,8 +70,57 @@ SoundcloudClass.prototype.getLikes = function (callback) {
     });
 };
 
+SoundcloudClass.prototype.getCachedLikes = function (callback) {
+    var cacheFile = './data/soundcloudlikes.json';
+
+    var getLikes = function (callback) {
+        SoundcloudClass.prototype.getLikes(function(err, likes) {
+            if (err) {
+                callback(err, null);
+            } else {
+                fs.writeFile(cacheFile, JSON.stringify(likes), function(err) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, likes);
+                    }
+                })
+            }
+        });
+    };
+
+    var getCache = function (callback) {
+        fs.readFile(cacheFile, 'utf8', function(err, cachedLikes) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, JSON.parse(cachedLikes));
+            }
+        })
+    };
+
+    fs.stat(cacheFile, function(err, stats){
+        if (err && err.code === 'ENOENT') {
+            getLikes(callback);
+        } else if (err) {
+            callback(err, null);
+        } else {
+            var cachedTime = new Date(util.inspect(stats.mtime)).getTime();
+            var currentTime = new Date().getTime();
+            var cacheAge = ((currentTime - cachedTime)/1000)/60;
+
+            // check to see if the age of the cache file is > 60 minutes
+            if (cacheAge > 60) {
+                getLikes(callback);
+            } else {
+                getCache(callback);
+            }
+        }
+    });
+};
+
 SoundcloudClass.prototype.getRandomTrackFromLikes = function (callback) {
-    SoundcloudClass.prototype.getLikes(function(err, likes) {
+    SoundcloudClass.prototype.getCachedLikes(function(err, likes) {
         if (err) {
             callback(err, null);
         } else {
