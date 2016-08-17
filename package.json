@@ -2,14 +2,18 @@
   "name": "dailydnb",
   "version": "0.0.1",
   "description": "Daily dnb artist and track generator",
-  "main": "index.js",
+  "main": "dailydnb.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "R Hill",
   "license": "BSD",
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
     "lodash": "~4.14.1",
+    "method-override": "^2.3.6",
     "soundcloud-nodejs-api-wrapper": "^0.3.2",
     "twit": "^2.2.4"
   }
