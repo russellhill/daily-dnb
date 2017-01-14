@@ -18,7 +18,7 @@ soundcloudClass.getRandomTrackFromLikes(function (err, track) {
                 if (err) {
                     console.log('Failed to send tweet:', err);
                 } else {
-                    console.log('Tweet sent');
+                    console.log('Tweet sent on ' + new Date());
                 }
             });
         });
